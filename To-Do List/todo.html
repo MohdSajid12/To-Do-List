@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media app</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0 50px;
+            background-color:aliceblue;
+        }
+
+        .container {
+            display: flex;
+            gap: 70px;
+        }
+        
+        #posts div{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #posts{
+            width:200px;
+        }
+        .options{
+            display: flex;
+            gap: 20px;
+        }
+
+        i{
+            cursor: pointer;
+        }
+        i:hover{
+            color: green;
+        }
+
+        #msg{
+            color: red;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>To-Do List App</h1>
+
+    <div class="container">
+        <div class="left">
+            <form id="form">
+                <label for=""> Write Your list here </label> <br><br>
+
+
+                <textarea name="" id="input" cols="30" rows="10"></textarea> <br><br>
+                <div id="msg"></div>
+                <button type="submit" style="margin-top: 15px;">Post</button>
+            </form>
+        </div>
+        <div class="right">
+            <h3>Your post here<i style="margin-left:50px;" onclick="allDelete(this)"class="fa-solid fa-trash"></i></h3>
+            <div id="posts">
+                <div>
+                    <p>Task-1</p>
+                    <span class="options">
+                        <i onclick="editPost(this)"  class="fa-solid fa-pen-to-square"></i>
+                        <i onclick="deletePost(this)" class="fa-solid fa-trash"></i>
+                    </span>
+
+                </div>
+                <div>
+                    <p>Task-2</p>
+                    <span class="options">
+                        <i onclick="editPost(this)"  class="fa-solid fa-pen-to-square"></i>
+                        <i onclick="deletePost(this)"  class="fa-solid fa-trash"></i>
+                    </span>
+                </div>
+           
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+    <script>
+
+        let form = document.querySelector('#form')
+        let input = document.getElementById("input")
+        let msg = document.querySelector("#msg")
+        let posts =  document.querySelector("#posts")
+        let leftdiv = document.querySelector(".left")
+        
+
+      
+
+        form.addEventListener("submit" , (e) =>{
+            e.preventDefault();
+            console.log("button clicked")
+            validation();
+            
+        })
+
+        function validation(){
+            if(input.value === ""){
+                 msg.innerHTML = "*Post can not be blank*";
+                 console.log("failure")
+            }
+            else {
+                console.log("success")
+                msg.innerHTML = " "
+                acceptData();
+            }
+        };
+
+
+        let data = {};
+
+        let acceptData = () =>{
+            data["text"] =  input.value;
+            
+             console.log(data)
+             createPost();
+        };
+
+
+
+        let createPost = () =>{
+            posts.innerHTML += 
+            
+            `
+            <div>
+                    <p>${data.text}</p>
+                    <span class="options">
+                        <i onclick="editPost(this)"  class="fa-solid fa-pen-to-square"></i>
+                        <i onclick="deletePost(this)" class="fa-solid fa-trash"></i>
+                    </span>
+
+                </div>
+
+            `            
+            input.value = ""
+        };
+        
+       
+
+        let deletePost = (e) =>{
+            e.parentElement.parentElement.remove();
+        }
+       
+        let editPost = (e) =>{
+            input.value = e.parentElement.previousElementSibling.innerHTML;
+            e.parentElement.parentElement.remove();
+        }
+       
+     let allDelete = () =>{
+            posts.remove();
+     }
+
+    </script>
+
+</html>
